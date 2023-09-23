@@ -10,6 +10,8 @@ class ThemeCustom {
       headlineSmall: textNameAppLight,
       bodyLarge: textBodyLoginLight,
       bodySmall: textBodySmallLight,
+      titleSmall: textTitleSmallLight,
+      titleLarge: textTitleLargelLight,
     ),
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(
@@ -26,6 +28,8 @@ class ThemeCustom {
       headlineSmall: textNameAppDark,
       bodyLarge: textBodyLoginDark,
       bodySmall: textBodySmallLight,
+      titleSmall: textTitleSmallDark,
+      titleLarge: textTitleLargelDark,
     ),
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(
@@ -62,6 +66,16 @@ const TextStyle textBodySmallLight = TextStyle(
   color: Colors.black,
   fontWeight: FontWeight.w600,
 );
+const TextStyle textTitleSmallLight = TextStyle(
+  fontSize: 14,
+  color: Colors.black,
+  fontWeight: FontWeight.w400,
+);
+const TextStyle textTitleLargelLight = TextStyle(
+  fontSize: 24,
+  color: Colors.black,
+  fontWeight: FontWeight.w700,
+);
 
 //themestyle Dark
 const TextStyle headLoginDark = TextStyle(
@@ -83,4 +97,14 @@ const TextStyle textBodySmallDark = TextStyle(
   fontSize: 16,
   color: Colors.white,
   fontWeight: FontWeight.w600,
+);
+const TextStyle textTitleSmallDark = TextStyle(
+  fontSize: 14,
+  color: Colors.white,
+  fontWeight: FontWeight.w400,
+);
+const TextStyle textTitleLargelDark = TextStyle(
+  fontSize: 24,
+  color: Colors.white,
+  fontWeight: FontWeight.w700,
 );

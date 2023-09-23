@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_app/apps/const/value.dart';
 import 'package:shopping_app/apps/routers/router_name.dart';
 import 'package:shopping_app/pages/auth/widget/button_login.dart';
+import 'package:shopping_app/providers/data_provider.dart';
 import 'package:shopping_app/widgets/input_body.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,6 +20,19 @@ class _LoginPageState extends State<LoginPage> {
   bool isChecked = false;
   void handleCreateAnAccount() {
     Navigator.pushNamed(context, RouterName.registerPage);
+  }
+
+  void handleSingIn() async {
+    context.read<DataProvider>().checkLogin();
+    // Navigator.popAndPushNamed(context, RouterName.rootPage);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controllerEmail.dispose();
+    controllerPassword.dispose();
   }
 
   @override
@@ -102,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     ButtonLogin(
                       text: textBuottonSingIn,
-                      onTap: () {},
+                      onTap: handleSingIn,
                     ),
                     const SizedBox(
                       height: 20,

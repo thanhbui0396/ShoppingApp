@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/providers/data_provider.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -11,7 +13,9 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   final introKey = GlobalKey<IntroductionScreenState>();
 
-  void _onIntroEnd(context) {}
+  void _onIntroEnd() {
+    context.read<DataProvider>().checkIntro();
+  }
 
   Widget _buildFullscreenImage() {
     return Image.asset(
@@ -45,7 +49,7 @@ class _IntroScreenState extends State<IntroScreen> {
       globalBackgroundColor: Theme.of(context).primaryColor,
       allowImplicitScrolling: false,
       autoScrollDuration: 3000,
-      infiniteAutoScroll: true,
+      infiniteAutoScroll: false,
       bodyPadding: const EdgeInsets.only(top: 160),
       pages: [
         PageViewModel(
@@ -74,8 +78,8 @@ class _IntroScreenState extends State<IntroScreen> {
           decoration: pageDecoration,
         ),
       ],
-      onDone: () => _onIntroEnd(context),
-      onSkip: () => _onIntroEnd(context), // You can override onSkip callback
+      onDone: () => _onIntroEnd(),
+      // You can override onSkip callback
       showSkipButton: false,
       showNextButton: true,
       skipOrBackFlex: 0,
@@ -87,8 +91,6 @@ class _IntroScreenState extends State<IntroScreen> {
 
       next: const Text('Next', style: TextStyle(fontWeight: FontWeight.w600)),
       done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
-      curve: Curves.fastLinearToSlowEaseIn,
-
       controlsPosition: const Position(bottom: 150, left: 0, right: 0),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),
