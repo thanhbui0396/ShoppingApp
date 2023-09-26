@@ -28,7 +28,7 @@ class DataProvider extends ChangeNotifier {
   void loadData() async {
     num = await SharedCustom.getsIntro('numIntro');
     isLogin = await SharedCustom.getsIsLogin('isLogin');
-    print(num);
+
     notifyListeners();
   }
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shopping_app/apps/routers/router.dart';
 import 'package:shopping_app/apps/routers/router_name.dart';
 import 'package:shopping_app/apps/themes/theme.dart';
+import 'package:shopping_app/providers/auth_providers.dart';
 import 'package:shopping_app/providers/data_provider.dart';
 
 class MyApp extends StatelessWidget {
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (Context) => DataProvider()..loadData(),
+          create: (_) => DataProvider()..loadData(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProviders(),
         ),
       ],
       child: const App(),
