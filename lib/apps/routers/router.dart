@@ -46,7 +46,7 @@ class RouterCustom {
   }
 
   static _errorPage() {
-    page(const ErrorPage());
+    return page(const ErrorPage());
   }
 
   static PageTransition<dynamic> page(Widget routerPage) =>

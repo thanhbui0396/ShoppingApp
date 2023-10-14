@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:like_button/like_button.dart';
 import 'package:shopping_app/apps/routers/router_name.dart';
 import 'package:shopping_app/apps/themes/theme.dart';
 
@@ -45,20 +46,10 @@ class _PopularCardState extends State<PopularCard> {
                       color: Color(0xFFC4C4C4),
                     ),
                   ),
-                  Positioned(
+                  const Positioned(
                     top: 10,
                     left: 10,
-                    child: StatefulBuilder(
-                      builder: (context, setState) => InkWell(
-                          onTap: () {
-                            setState(
-                              () => isFavorite = !isFavorite,
-                            );
-                          },
-                          child: SvgPicture.asset(isFavorite
-                              ? 'assets/images/icons/love.svg'
-                              : 'assets/images/icons/love_out.svg')),
-                    ),
+                    child: LikeButton(),
                   ),
                   Positioned(
                     top: 10,

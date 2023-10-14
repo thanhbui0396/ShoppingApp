@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shopping_app/apps/const/shared_pre.dart';
 
@@ -12,8 +13,9 @@ class DataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void checkLogOut() {
+  void checkLogOut() async {
     isLogin = false;
+    await FirebaseAuth.instance.signOut();
     SharedCustom.saveIsLogin('isLogin', isLogin);
 
     notifyListeners();

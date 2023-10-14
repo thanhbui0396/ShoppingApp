@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:shopping_app/apps/routers/router.dart';
 import 'package:shopping_app/apps/themes/theme.dart';
 import 'package:shopping_app/pages/account_page/account_page.dart';
 import 'package:shopping_app/pages/home/home_page.dart';
@@ -25,11 +26,17 @@ class BottomNavBarPage extends StatelessWidget {
           icon: const Icon(Icons.home),
           activeColorPrimary: main_light,
           inactiveColorPrimary: Colors.grey,
+          routeAndNavigatorSettings: const RouteAndNavigatorSettings(
+            onGenerateRoute: RouterCustom.onGenerateRoute,
+          ),
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.account_circle),
           activeColorPrimary: main_light,
           inactiveColorPrimary: Colors.grey,
+          routeAndNavigatorSettings: const RouteAndNavigatorSettings(
+            onGenerateRoute: RouterCustom.onGenerateRoute,
+          ),
         ),
       ];
     }

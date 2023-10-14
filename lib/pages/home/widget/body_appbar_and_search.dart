@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,6 +15,10 @@ class BodyAppbarAndSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final id = FirebaseAuth.instance.currentUser!.uid;
+    Stream documentStream =
+        FirebaseFirestore.instance.collection('users').doc(id).snapshots();
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 30,
@@ -34,9 +40,23 @@ class BodyAppbarAndSearch extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Louis',
-                      style: Theme.of(context).textTheme.titleLarge,
+                    StreamBuilder(
+                      stream: documentStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Something went wrong');
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text("Loading");
+                        }
+                        var data = snapshot.data as DocumentSnapshot;
+                        return Text(
+                          data['username'],
+                          style: Theme.of(context).textTheme.titleLarge,
+                        );
+                      },
                     ),
                   ],
                 ),

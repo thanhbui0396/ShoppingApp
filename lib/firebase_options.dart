@@ -44,37 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBeM2kqoeA4Y_5FN-t3Tjj3CehqSLWJ2fY',
-    appId: '1:265615418152:web:3bde7e763b1b50a896a61d',
-    messagingSenderId: '265615418152',
-    projectId: 'shoppingapp-b47fe',
-    authDomain: 'shoppingapp-b47fe.firebaseapp.com',
-    storageBucket: 'shoppingapp-b47fe.appspot.com',
+    apiKey: 'AIzaSyBMQUyaS1MCqloVLdJU4RtsLMG3clKb2z8',
+    appId: '1:528933467934:web:faaaf1585d9c8e20f1bb0f',
+    messagingSenderId: '528933467934',
+    projectId: 'shopping-f46c1',
+    authDomain: 'shopping-f46c1.firebaseapp.com',
+    storageBucket: 'shopping-f46c1.appspot.com',
+    measurementId: 'G-W9W3Y9CD7F',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD6NsvXzVOJJ-1uWb-EHg0RzZpC18WY7Q4',
-    appId: '1:265615418152:android:d47621193529706e96a61d',
-    messagingSenderId: '265615418152',
-    projectId: 'shoppingapp-b47fe',
-    storageBucket: 'shoppingapp-b47fe.appspot.com',
+    apiKey: 'AIzaSyANvKmaWzO8ZduKG0dUvomXHhOmlNuyEMw',
+    appId: '1:528933467934:android:b8bb30509949cb71f1bb0f',
+    messagingSenderId: '528933467934',
+    projectId: 'shopping-f46c1',
+    storageBucket: 'shopping-f46c1.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyASQkkh80ZUnaZdvGdFuc1QrVZGQLEBhhg',
-    appId: '1:265615418152:ios:9115a2664e98c4e696a61d',
-    messagingSenderId: '265615418152',
-    projectId: 'shoppingapp-b47fe',
-    storageBucket: 'shoppingapp-b47fe.appspot.com',
+    apiKey: 'AIzaSyAFjEz2JdlIv7iw9KVpSBG1zbVliwo3eIE',
+    appId: '1:528933467934:ios:2b345890c78428e2f1bb0f',
+    messagingSenderId: '528933467934',
+    projectId: 'shopping-f46c1',
+    storageBucket: 'shopping-f46c1.appspot.com',
     iosBundleId: 'com.example.shoppingApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyASQkkh80ZUnaZdvGdFuc1QrVZGQLEBhhg',
-    appId: '1:265615418152:ios:306a645a2f3c697796a61d',
-    messagingSenderId: '265615418152',
-    projectId: 'shoppingapp-b47fe',
-    storageBucket: 'shoppingapp-b47fe.appspot.com',
+    apiKey: 'AIzaSyAFjEz2JdlIv7iw9KVpSBG1zbVliwo3eIE',
+    appId: '1:528933467934:ios:fd65e31b3889836af1bb0f',
+    messagingSenderId: '528933467934',
+    projectId: 'shopping-f46c1',
+    storageBucket: 'shopping-f46c1.appspot.com',
     iosBundleId: 'com.example.shoppingApp.RunnerTests',
   );
 }

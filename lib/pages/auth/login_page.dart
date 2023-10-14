@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/apps/const/value.dart';
 import 'package:shopping_app/apps/routers/router_name.dart';
 import 'package:shopping_app/pages/auth/widget/button_login.dart';
+import 'package:shopping_app/providers/auth_providers.dart';
 import 'package:shopping_app/providers/data_provider.dart';
 import 'package:shopping_app/widgets/input_body.dart';
 
@@ -18,13 +20,24 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController controllerPassword = TextEditingController();
   final GlobalKey<FormState> _globalKeyLogin = GlobalKey<FormState>();
   bool isChecked = false;
-  void handleCreateAnAccount() {
+  void handleCreateAnAccount() async {
+    await Future.delayed(const Duration(milliseconds: 30));
     Navigator.pushNamed(context, RouterName.registerPage);
   }
 
-  void handleSingIn() async {
-    context.read<DataProvider>().checkLogin();
-    // Navigator.popAndPushNamed(context, RouterName.rootPage);
+  Future<void> handleSingIn() async {
+    EasyLoading.show(status: 'Loading');
+    await context
+        .read<AuthProviders>()
+        .Signin(controllerEmail.text, controllerPassword.text)
+        .onError((error, stackTrace) {
+      EasyLoading.dismiss();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.toString())));
+      return null;
+    }).then((value) {
+      EasyLoading.dismiss();
+    });
   }
 
   @override
@@ -42,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: Theme.of(context).primaryColor,
         body: Column(
           children: [
@@ -73,151 +86,157 @@ class _LoginPageState extends State<LoginPage> {
                     top: Radius.circular(32),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      textHeaderLogin,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      textDesLogin,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(
-                      height: 27,
-                    ),
-                    Form(
-                      key: _globalKeyLogin,
-                      child: Column(
-                        children: [
-                          InputBody(
-                            label: textLabelUsername,
-                            controller: controllerEmail,
-                            isPassword: false,
-                            assetName: iconUser,
-                          ),
-                          const SizedBox(
-                            height: 18,
-                          ),
-                          InputBody(
-                            label: textLabelPassword,
-                            controller: controllerPassword,
-                            isPassword: true,
-                            assetName: iconPassword,
-                          )
-                        ],
+                child: SingleChildScrollView(
+                  clipBehavior: Clip.hardEdge,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        textHeaderLogin,
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ButtonLogin(
-                      text: textBuottonSingIn,
-                      onTap: handleSingIn,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              StatefulBuilder(
-                                builder: (context, setState) => Checkbox(
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    checkColor: Colors.white,
-                                    activeColor: Theme.of(context).primaryColor,
-                                    fillColor: MaterialStatePropertyAll(
-                                        Theme.of(context).primaryColor),
-                                    value: isChecked,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        isChecked = value!;
-                                      });
-                                    }),
-                              ),
-                              Text(
-                                textKeepSignIn,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              )
-                            ],
-                          ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        textDesLogin,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const SizedBox(
+                        height: 27,
+                      ),
+                      Form(
+                        key: _globalKeyLogin,
+                        child: Column(
+                          children: [
+                            InputBody(
+                              label: textLabelUsername,
+                              controller: controllerEmail,
+                              isPassword: false,
+                              assetName: iconUser,
+                            ),
+                            const SizedBox(
+                              height: 18,
+                            ),
+                            InputBody(
+                              label: textLabelPassword,
+                              controller: controllerPassword,
+                              isPassword: true,
+                              assetName: iconPassword,
+                            )
+                          ],
                         ),
-                        Material(
-                          clipBehavior: Clip.hardEdge,
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {},
-                            // child: Text(
-                            //   textForgotPassword,
-                            //   style: TextStyle(
-                            //     fontSize: 16,
-                            //     fontWeight: FontWeight.w600,
-                            //     color: Theme.of(context).primaryColor,
-                            //     decoration: TextDecoration.underline,
-                            //     decorationThickness: 2,
-                            //   ),
-                            // ),
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 1),
-                              padding: const EdgeInsets.only(
-                                bottom: 1, // Space between underline and text
-                              ),
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      ButtonLogin(
+                        text: textBuottonSingIn,
+                        onTap: handleSingIn,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                StatefulBuilder(
+                                  builder: (context, setState) => Checkbox(
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      checkColor: Colors.white,
+                                      activeColor:
+                                          Theme.of(context).primaryColor,
+                                      fillColor: MaterialStatePropertyAll(
+                                          Theme.of(context).primaryColor),
+                                      value: isChecked,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          isChecked = value!;
+                                        });
+                                      }),
+                                ),
+                                Text(
+                                  textKeepSignIn,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                )
+                              ],
+                            ),
+                          ),
+                          Material(
+                            clipBehavior: Clip.hardEdge,
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {},
+                              // child: Text(
+                              //   textForgotPassword,
+                              //   style: TextStyle(
+                              //     fontSize: 16,
+                              //     fontWeight: FontWeight.w600,
+                              //     color: Theme.of(context).primaryColor,
+                              //     decoration: TextDecoration.underline,
+                              //     decorationThickness: 2,
+                              //   ),
+                              // ),
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 1),
+                                padding: const EdgeInsets.only(
+                                  bottom: 1, // Space between underline and text
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      width: 1.0, // Underline thickness
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  textForgotPassword,
+                                  style: TextStyle(
+                                    fontSize: 16,
                                     color: Theme.of(context).primaryColor,
-                                    width: 1.0, // Underline thickness
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
-                              child: Text(
-                                textForgotPassword,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          const Center(
+                            child: Text(
+                              textQuestionAccount,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xFF7D8FAB),
                               ),
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Center(
-                          child: Text(
-                            textQuestionAccount,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF7D8FAB),
-                            ),
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ButtonLogin(
-                          text: textCreateAccount,
-                          onTap: handleCreateAnAccount,
-                          isOutLine: true,
-                        ),
-                      ],
-                    ))
-                  ],
+                          ButtonLogin(
+                            text: textCreateAccount,
+                            onTap: handleCreateAnAccount,
+                            isOutLine: true,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

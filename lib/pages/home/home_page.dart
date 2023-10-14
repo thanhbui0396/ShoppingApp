@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_app/pages/home/body_category/body_category.dart';
 import 'package:shopping_app/pages/home/popular_deals/popular_deals.dart';
 import 'package:shopping_app/pages/home/widget/body_appbar_and_search.dart';
 import 'package:shopping_app/pages/home/widget/slider_body.dart';
+import 'package:shopping_app/providers/image_slider_providers.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,12 +16,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController textEditingController = TextEditingController();
+  void handleOnChange(String value) {
+    print(value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController textEditingController = TextEditingController();
-    void handleOnChange(String value) {
-      print(value);
-    }
+    context.read<ImageSliderProviders>().getImagesSlider;
 
     return Scaffold(
       backgroundColor: Colors.white,
